@@ -19,16 +19,12 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '../firebase.js';
 import { getAuth } from "firebase/auth";
 
-
 // Initialize Firebase Auth
-
-
 
 
 const Page = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // State to check if user is logged in
   const [isCreatingAccount, setIsCreatingAccount] = useState(false); // State to toggle between login and create account
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState(''); // State for email during account creation
   const [showPassword, setShowPassword] = useState(false);
@@ -41,7 +37,6 @@ const Page = () => {
   const [message, setMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-
 
   const theme = createTheme({
     palette: {
@@ -72,7 +67,6 @@ const Page = () => {
     shape: { borderRadius: 12 },
   });
 
-
   const handleLogin = () => {
     if (email && password) {
       signInWithEmailAndPassword(auth, email, password)
@@ -89,7 +83,6 @@ const Page = () => {
       alert('Please enter both email and password');
     }
   };
-
 
   const handleCreateAccount = () => {
     if (email && password) {
@@ -109,7 +102,6 @@ const Page = () => {
     }
   };
 
-
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
@@ -123,7 +115,6 @@ const Page = () => {
       });
   };
 
-
   const sendMessage = async () => {
     setIsTyping(true);
     setMessage("");
@@ -132,7 +123,6 @@ const Page = () => {
       { role: "user", content: message },
       { role: "assistant", content: "" },
     ]);
-
 
     fetch("/api/chat", {
       method: "POST",
@@ -143,7 +133,6 @@ const Page = () => {
     }).then(async (res) => {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
-
 
       let result = "";
       return reader.read().then(function processText({ done, value }) {
@@ -163,6 +152,9 @@ const Page = () => {
             },
           ];
         });
+        setTimeout(() => {
+          setIsTyping(false);
+        }, 500); // 500ms delay before resetting
         return reader.read().then(processText);
       });
     });
@@ -170,27 +162,22 @@ const Page = () => {
 
 
 
-
-
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
- 
-
+  
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
 
-
   const renderMessageContent = (content) => {
     const paragraphs = content.split('\n');
     return paragraphs.map((paragraph, index) => (
-      <Typography
+      <Typography 
         key={index}
         variant="body1"
-        sx={{
+        sx={{ 
           marginBottom: index < paragraphs.length - 1 ? 1 : 0
         }}
       >
@@ -198,7 +185,6 @@ const Page = () => {
       </Typography>
     ));
   };
-
 
   if (!isAuthenticated) {
     return (
@@ -237,14 +223,13 @@ const Page = () => {
                 </Typography>
               </Box>
 
-
               {/* Login Form */}
               <Box width="100%" mb={2}>
                 <TextField
-                  label="Username"
+                  label="Email"
                   fullWidth
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   variant="outlined"
                   margin="normal"
                 />
@@ -266,18 +251,7 @@ const Page = () => {
                     ),
                   }}
                 />
-                {isCreatingAccount && (
-                  <TextField
-                    label="Email"
-                    fullWidth
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    variant="outlined"
-                    margin="normal"
-                  />
-                )}
               </Box>
-
 
               <Stack direction="row" spacing={2} justifyContent="center">
                 <Button
@@ -302,7 +276,6 @@ const Page = () => {
       </ThemeProvider>
     );
   }
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -336,7 +309,6 @@ const Page = () => {
                     Chat with DevMate
                 </Typography>
             </Box>
-
 
             {/* Main Content */}
             <Stack
@@ -376,7 +348,6 @@ const Page = () => {
               ))}
             </Stack>
 
-
             {/* Input Field and Send Button */}
             <Stack direction={"row"} spacing={2} mt={2}>
               <TextField
@@ -411,6 +382,5 @@ const Page = () => {
     </ThemeProvider>
   );
 };
-
 
 export default Page;
