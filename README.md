@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
 To run the proper website(Missing API), use this link: https://devmate-chatsupport.vercel.app/
+
 Follow the following steps to add your own API to see the project in action
 
 ## Getting Started
