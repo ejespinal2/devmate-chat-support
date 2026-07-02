@@ -24,13 +24,16 @@ Continuous Learning: Stay updated on new features and updates to the platform to
 `
 
 export async function POST(req){
-    const openai = new OpenAI()
+    const openai = new OpenAI({
+        apiKey: process.env.GROQ_API_KEY,
+        baseURL: "https://api.groq.com/openai/v1",
+    })
     const data = await req.json()
 
     const completion = await openai.chat.completions.create({
         messages: [{role: 'system', content: systemPrompt}, ...data],
-    model: 'gpt-4o-mini',
-    stream: true,
+        model: 'openai/gpt-oss-20b',
+        stream: true,
     })
 
 
