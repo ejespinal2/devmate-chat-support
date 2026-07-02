@@ -2,8 +2,6 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 To run the proper website(Missing API), use this link: https://devmate-chatsupport.vercel.app/
 
-Follow the following steps to add your own API to see the project in action
-
 ## Getting Started
 
 First, run the development server:
@@ -24,7 +22,7 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-***You Must Add Your Own API Key To The .env.local File***
+***You Must Add Your Own API Key To A .env.local File***
 
 ## Learn More
 
